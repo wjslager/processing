@@ -1,7 +1,7 @@
 IntList selectedPixels;
 color[] selectedPixelsColors, sortedPixels;
 
-void global_sort(int threshold, boolean inverse) {
+void global_sort(int threshold, boolean inverse, int mode) {
   selectedPixels = new IntList();
   int brightness, sortLength;
   img.loadPixels();
@@ -13,10 +13,21 @@ void global_sort(int threshold, boolean inverse) {
     brightness = ((img.pixels[i] >> 16) & 0xFF) + ((img.pixels[i] >> 8) & 0xFF) + (img.pixels[i] & 0xFF);
     brightness = int(brightness / 3);
 
-    // If the brightness passes the threshold, the current pixels index (coordinate) is stored
-    if (brightness >= threshold) {
-      selectedPixels.append(i);
-    };
+    // Different modes of selecting pixels to sort
+    switch(mode) {
+    case 1: 
+      // Darker pixels get sorted first
+      if (brightness >= threshold) selectedPixels.append(i);
+      break;
+    case 2:
+      // Bright pixels get sorted first
+      if (brightness <= threshold) selectedPixels.append(i);
+      break;
+    case 3:
+      // Random pixels get sorted first, threshold is the chance.
+      if (random(255) <= threshold) selectedPixels.append(i);
+      break;
+    }
   };
 
   sortLength = selectedPixels.size();

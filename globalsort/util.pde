@@ -1,6 +1,12 @@
+void keyPressed() {
+  if (int(key)==65535) shiftHeld = true;
+};
+
 void keyReleased() {
   if (img == null) {
     // Do nothing
+  } else if (int(key)==65535) {
+    shiftHeld = false;
   } else if (key=='r') {
     reloadImage();
   } else if (key=='s') {
@@ -11,15 +17,24 @@ void keyReleased() {
   } else if (key=='i') {
     inverse =! inverse;
     reloadImage();
+    global_sort(threshold, inverse, sortMode);
   } else if (key==TAB) {
     showHelp =! showHelp;
+  } else if (int(key) >= 49 && int(key) <= 51) {
+    sortMode = int(key) - 48;
+    global_sort(threshold, inverse, sortMode);
   };
 }
 
 void mouseWheel(MouseEvent event) {
-  threshold += event.getCount() * 3;
+  if (shiftHeld) {
+    factor = 1;
+  } else {
+    factor = 10;
+  };
+  threshold += -event.getCount() * factor;
   threshold = constrain(threshold, 0, 255);
-  println("Threshold = "+threshold);
+  //println("Threshold = "+threshold);
 }
 
 void loadFile(File selection) {
@@ -35,27 +50,5 @@ void loadFile(File selection) {
 
 void reloadImage() {
   img = loadImage(imgPath);
-  println("Loading "+imgPath);
+  //println("Loading "+imgPath);
 }
-
-void startupScreen() {
-  background(0);
-  textAlign(CENTER);
-  textSize(16);
-  text("(Press any key to) load an image", width*0.5, height*0.2);
-  text("github.com/wjslager", width*0.5, height*0.3);
-  text("controls:", width*0.5, height*0.5);
-  text("'r' = reload image", width*0.5, height*0.6);
-  text("'s' = save image as png", width*0.5, height*0.7);
-  text("'i' = inverse sorting", width*0.5, height*0.8);
-}
-
-void gui(boolean mode) {
-  textSize(16);
-  textAlign(CENTER);
-  if (mode) {
-    text("dikke friet", width*0.5, height*0.5);
-  } else {
-    text("pasta", width*0.5, height*0.5);
-  };
-};

@@ -1,10 +1,14 @@
 PImage img;
 String imgPath, imgSavePath;
 
-// Settings
+int factor;
+boolean shiftHeld;
+
+// User settings
 boolean inverse = false;
-boolean showHelp = false;
+boolean showHelp = true;
 int threshold = 255, lastThreshold;
+int sortMode = 1;
 
 void setup() {
   // Open a window to load a file
@@ -26,13 +30,14 @@ void draw() {
   if (img != null) {
     // If an image is actually loaded, apply image fx
 
-    // Only reload image if threshold value changed
-    if (threshold != lastThreshold) reloadImage();
+    // Only reload image if threshold value changed or sortMode = random 
+    if (threshold != lastThreshold || sortMode==3) {
+      reloadImage();
+      global_sort(threshold, inverse, sortMode);
+    };
     lastThreshold = threshold;
-    
-    // Apply fx and show the correct menu
-    global_sort(threshold, inverse);
-    gui(showHelp);
+
+    if (showHelp) gui();
   } else {
     startupScreen();
   };
