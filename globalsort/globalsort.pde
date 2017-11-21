@@ -1,12 +1,10 @@
-import controlP5.*;
-ControlP5 cp5;
-
 PImage img;
 String imgPath, imgSavePath;
 
 // Settings
 boolean inverse = false;
-int threshold = 255;
+boolean showHelp = false;
+int threshold = 255, lastThreshold;
 
 void setup() {
   // Open a window to load a file
@@ -27,8 +25,14 @@ void draw() {
 
   if (img != null) {
     // If an image is actually loaded, apply image fx
-    reloadImage();
+
+    // Only reload image if threshold value changed
+    if (threshold != lastThreshold) reloadImage();
+    lastThreshold = threshold;
+    
+    // Apply fx and show the correct menu
     global_sort(threshold, inverse);
+    gui(showHelp);
   } else {
     startupScreen();
   };

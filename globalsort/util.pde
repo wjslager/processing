@@ -3,18 +3,23 @@ void keyReleased() {
     // Do nothing
   } else if (key=='r') {
     reloadImage();
-    println("Reloading image");
   } else if (key=='s') {
-    // Write to file:
-    // original_name_jpeg-HHMMSS-globalsorted.png
+    // Write to file: original_name_jpeg-HHMMSS-globalsorted.png
     imgSavePath = imgPath+"-"+hour()+minute()+second()+"-globalsorted.png";
     img.save(imgSavePath);
     println("Saved image to: ", imgSavePath);
   } else if (key=='i') {
     inverse =! inverse;
     reloadImage();
-    println("Sorting inversed");
+  } else if (key==TAB) {
+    showHelp =! showHelp;
   };
+}
+
+void mouseWheel(MouseEvent event) {
+  threshold += event.getCount() * 3;
+  threshold = constrain(threshold, 0, 255);
+  println("Threshold = "+threshold);
 }
 
 void loadFile(File selection) {
@@ -25,29 +30,12 @@ void loadFile(File selection) {
     imgPath = selection.getAbsolutePath();
     img = loadImage(imgPath);
     surface.setSize(img.width, img.height);
-    //surface.setResizable(false);
-    initGui();
   };
 }
 
 void reloadImage() {
   img = loadImage(imgPath);
-}
-
-void initGui() {
-  cp5 = new ControlP5(this);
-
-  cp5.addSlider("threshold")
-    .setPosition(10, 10)
-    .setSize(30, img.height-20)
-    .setRange(0, 255)
-    .setValue(255)
-    .setCaptionLabel("")
-    .setColorActive(color(0, 255))
-    .setColorForeground(color(0, 200))
-    .setColorBackground(color(0, 100))
-    .setColorValue(color(255, 0)) 
-    ;
+  println("Loading "+imgPath);
 }
 
 void startupScreen() {
@@ -61,3 +49,13 @@ void startupScreen() {
   text("'s' = save image as png", width*0.5, height*0.7);
   text("'i' = inverse sorting", width*0.5, height*0.8);
 }
+
+void gui(boolean mode) {
+  textSize(16);
+  textAlign(CENTER);
+  if (mode) {
+    text("dikke friet", width*0.5, height*0.5);
+  } else {
+    text("pasta", width*0.5, height*0.5);
+  };
+};
