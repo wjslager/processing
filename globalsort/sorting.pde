@@ -6,7 +6,7 @@ void global_sort(int threshold, boolean inverse, int mode) {
   int brightness, sortLength;
   img.loadPixels();
 
-  // Analyze pixels and store results
+  // Execute the following code for each pixel
   for (int i=0; i<img.pixels.length; i++) {
 
     // Extract brightness values using bitshifting
@@ -16,15 +16,15 @@ void global_sort(int threshold, boolean inverse, int mode) {
     // Different modes of selecting pixels to sort
     switch(mode) {
     case 1: 
-      // Darker pixels get sorted first
-      if (brightness >= threshold) selectedPixels.append(i);
+      // Bright pixels get selected for sorting first
+      if (brightness >= ((threshold * -1) + 255)) selectedPixels.append(i);
       break;
     case 2:
-      // Bright pixels get sorted first
+      // Dark pixels get selected for sorting first
       if (brightness <= threshold) selectedPixels.append(i);
       break;
     case 3:
-      // Random pixels get sorted first, threshold is the chance.
+      // Random pixels get selected for sorting first
       if (random(255) <= threshold) selectedPixels.append(i);
       break;
     }

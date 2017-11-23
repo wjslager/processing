@@ -1,12 +1,20 @@
 void keyPressed() {
-  if (int(key)==65535) shiftHeld = true;
-};
+  if (key==CODED && keyCode==SHIFT) {
+    factor = 1;
+  } else if (key==CODED && keyCode==UP) {
+    threshold += 1 * factor;
+  } else if (key==CODED && keyCode==DOWN) {
+    threshold -= 1 * factor;
+  };
+  
+  threshold = constrain(threshold, 0, 255);
+}
 
 void keyReleased() {
   if (img == null) {
     // Do nothing
-  } else if (int(key)==65535) {
-    shiftHeld = false;
+  } else if (key==CODED && keyCode==SHIFT) {
+    factor = 10;
   } else if (key=='r') {
     reloadImage();
   } else if (key=='s') {
@@ -22,19 +30,14 @@ void keyReleased() {
     showHelp =! showHelp;
   } else if (int(key) >= 49 && int(key) <= 51) {
     sortMode = int(key) - 48;
+    reloadImage();
     global_sort(threshold, inverse, sortMode);
   };
 }
 
 void mouseWheel(MouseEvent event) {
-  if (shiftHeld) {
-    factor = 1;
-  } else {
-    factor = 10;
-  };
   threshold += -event.getCount() * factor;
   threshold = constrain(threshold, 0, 255);
-  //println("Threshold = "+threshold);
 }
 
 void loadFile(File selection) {
@@ -50,5 +53,5 @@ void loadFile(File selection) {
 
 void reloadImage() {
   img = loadImage(imgPath);
-  //println("Loading "+imgPath);
+  global_sort(threshold, inverse, sortMode);
 }

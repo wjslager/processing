@@ -18,10 +18,13 @@ void gui() {
   fill(0, 150);
   rect(width-245, 5, 240, 100);
   fill(255);
-  text("[shift]+[wheel] Sorting threshold: "+threshold, width-10, 10);
-  text("[i] Sorting inversed: "+inverse, width-10, 25);
-  text("[1/2/3] Sorting mode: "+sortMode, width-10, 40);
-  text("[s] Save as png", width-10, 55);
-  text("[TAB] Hide this menu", width-10, 70);
-  text("github.com/wjslager", width-10, 85);
+  text("[wheel] / [up] / [down] amount: "+threshold, width-10, 10);
+  text("[i] inversed sorting: "+inverse, width-10, 25);
+  text("[1] / [2] / [3] sorting mode: "+sortMode, width-10, 40);
+  text("[s] save as png", width-10, 55);
+  text("[TAB] hide this menu", width-10, 70);
+  
+  textAlign(LEFT, BOTTOM);
+  fill(200);
+  text("github.com/wjslager", width-240, 100);
 };

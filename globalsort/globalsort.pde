@@ -1,13 +1,12 @@
 PImage img;
 String imgPath, imgSavePath;
 
-int factor;
-boolean shiftHeld;
+int factor = 10;
 
 // User settings
 boolean inverse = false;
 boolean showHelp = true;
-int threshold = 255, lastThreshold;
+int threshold = 0, lastThreshold;
 int sortMode = 1;
 
 void setup() {
