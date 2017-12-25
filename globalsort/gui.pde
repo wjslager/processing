@@ -27,4 +27,4 @@ void gui() {
   textAlign(LEFT, BOTTOM);
   fill(200);
   text("github.com/wjslager", width-240, 100);
-};
+}
