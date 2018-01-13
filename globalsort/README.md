@@ -23,6 +23,10 @@ Press 'TAB' to show/hide an overlay containing an overview of all the keyboard m
 
 ![globalsort 3](docs/globalsort3.png?raw=true)
 
+![globalsort 4](docs/globalsort4.png?raw=true)
+
+![globalsort 5](docs/globalsort5.png?raw=true)
+
 Inspired by [ASDFPixelSort](https://github.com/kimasendorf/ASDFPixelSort)
 
 Written by Ward Slager, 2017
