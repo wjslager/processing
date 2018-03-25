@@ -7,9 +7,9 @@ IIR pixIIR = new IIR(0.5);
 
 void setup()
 {
-  //size(800, 800);
-  size(1920, 1080);
-  background(00);
+  size(800, 800);
+  //size(1920, 1080);
+  background(0);
 }
 
 /* ==== ==== DRAW ==== ==== */
@@ -32,13 +32,18 @@ void draw()
     {
       int x = abs(int(random(-20, 20) + mouseX)) % width;
       int y = abs(int(random(-20, 20) + mouseY)) % height;
-      pixels[y * width + x] = pixels[mouseY * width + mouseX] << 1;
+      pixels[y * width + x] = pixels[mouseY * width + mouseX] << 10;
     }
   }
 
   // Process using a simple IIR
   for (int i = 0; i < pixels.length; i++) {
     pixels[i] = int(pixIIR.filter(pixels[i]));
+  }
+  
+  // Delay effect
+  for (int i = 0; i < pixels.length; i++) {
+    pixels[i] = int(pixels[i] * 0.9999) + int(0.0001 * pixels [constrain(i-10000, 0, pixels.length)]);
   }
   updatePixels();
 }

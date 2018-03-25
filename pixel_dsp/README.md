@@ -10,4 +10,8 @@ A basic sketch manipulating pixels with a simple IIR filter. The screen starts b
 
 ![pixel_dsp 2](docs/1528-81740-TOBYd.png?raw=true)
 
+![pixel_dsp 3](docs/2043-19934-nGDqz.png?raw=true)
+
+![pixel_dsp 4](docs/2047-22711-fkjxZ.png?raw=true)
+
 Written by Ward Slager, 2018
