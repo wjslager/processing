@@ -1,3 +1,7 @@
+void captureEvent(Capture video) {  
+  video.read();
+}
+
 // Check if the mouse is within the window
 boolean mouseInWindow()
 {
