@@ -40,6 +40,14 @@ Manipulating pixels with some basic audio effects. The screen starts blank and c
 
 ![pixel_dsp](docs/pixel_dsp17.png?raw=true)
 
-pixel_dsp
+![pixel_dsp](docs/pixel_dsp18.png?raw=true)
 
-Written by Ward Slager, 2018
+![pixel_dsp](docs/pixel_dsp19.png?raw=true)
+
+![pixel_dsp](docs/pixel_dsp20.png?raw=true)
+
+![pixel_dsp](docs/pixel_dsp21.png?raw=true)
+
+![pixel_dsp](docs/pixel_dsp22.png?raw=true)
+
+![pixel_dsp](docs/pixel_dsp23.png?raw=true)
