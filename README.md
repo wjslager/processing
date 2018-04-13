@@ -13,6 +13,6 @@ This repository is a collection of Processing sketches I've created for various 
 
 ## Pixel_dsp
 
-![pixel_dsp 0](pixel_dsp/docs/161-34796-DhHen.png?raw=true)
+![pixel_dsp 0](pixel_dsp/docs/pixel_dsp00.png?raw=true)
 
-![pixel_dsp 2](pixel_dsp/docs/1528-81740-TOBYd.png?raw=true)
+![pixel_dsp 2](pixel_dsp/docs/pixel_dsp14.png?raw=true)
