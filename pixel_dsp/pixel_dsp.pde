@@ -1,6 +1,7 @@
 import processing.video.*;
 Capture video;
 
+/* Don't touch these values */
 color[] previousPixels;
 boolean looping = true, captureFrame = false, clearFrame = false, randomFrame = false;
 
@@ -9,6 +10,7 @@ boolean IIR = true;
 boolean pixelDelay = true;
 boolean frameIIR = true;
 
+// Store the screenshots in this (sub)folder
 String imageFolder = "docs";
 
 IIR pixelIIR = new IIR(0.1);
@@ -17,10 +19,12 @@ IIR pixelIIR = new IIR(0.1);
 
 void setup()
 {
-  size(800, 800);
+  //size(800, 800);
+  //size(4000, 4000);
   //size(800, 150);
   //size(640, 480);
   //size(1920, 1080);
+  fullScreen();
   background(0);
 
   video = new Capture(this, 1280, 720); 
@@ -28,12 +32,22 @@ void setup()
 
   loadPixels();
   previousPixels = new color[pixels.length];
+
+  noLoop();
 }
 
 /* ==== ==== DRAW ==== ==== */
 
 void draw()
 {
+  frameInsertions();
+  frameFX();
+
+  updatePixels();
+}
+
+void frameInsertions() {
+  // Blend in a webcam frame
   if (captureFrame) {
     tint(255, 1);
     image(video, 0, 0, width, height);
@@ -42,14 +56,16 @@ void draw()
 
   loadPixels();
 
+  // Clear the frame
   if (clearFrame) {
-    for (int i = 0; i < pixels.length; i++) {
-      pixels[i] = color(0);
-    }
+    background(0);
     clearFrame = false;
-  } else if (randomFrame) {
+  }
+
+  // Insert noise
+  if (randomFrame) {
     for (int i = 0; i < pixels.length; i++) {
-      pixels[i] += color(random(1));
+      pixels[i] += color(random(0, 1.001));
     }
     randomFrame = false;
   }
@@ -70,22 +86,17 @@ void draw()
       pixels[mouseY * width + mouseX] = pixels[mouseY * width + mouseX] << 2;
     }
   }
+}
 
-  // Process using a simple IIR
+void frameFX () {
+  // IIR, left to right, downwards
   if (IIR) {
     for (int i = 0; i < pixels.length; i++) {
       pixels[i] = int(pixelIIR.filter(pixels[i]));
     }
   }
 
-  // Delay effect with last pixel
-  if (pixelDelay) {
-    for (int i = 0; i < pixels.length; i++) {
-      pixels[i] = int(pixels[i] * 0.9999) + int(0.0001 * pixels [constrain(i-10200, 0, pixels.length)]);
-    }
-  }
-
-  // Delay effect with last frame
+  // IIR, current pixel with last pixel
   if (frameIIR) {
     for (int i = 0; i < pixels.length; i++) {
       // Compare to last frame
@@ -96,48 +107,10 @@ void draw()
     }
   }
 
-  updatePixels();
-}
-
-/* ==== ==== INTERACTION ==== ==== */
-
-void keyPressed() {
-  /* Keyboard controls:
-   
-   space  save frame
-   L      start/stop continious drawing
-   V      insert a webcam frame
-   X      insert random noise
-   C      clear screen (to black)
-   
-   */
-  switch (key) 
-  {
-  case ' ':
-    //String filename = str(year()) + "-" + str(month()) + "-" + str(day()) + "-" + str(hour()) + "-" + str(millis()) + "-" + randomString(5);
-    String filename = str(hour()) + str(minute()) + "-" + str(millis()) + "-" + randomString(5);
-    saveFrame(imageFolder + "/" + filename + ".png");
-    println("Frame saved as " + filename + ".png");
-    break;
-  case 'l':
-    looping = !looping;
-    if (looping) {
-      noLoop();
-    } else {
-      loop();
+  // Delay effect with last pixel
+  if (pixelDelay) {
+    for (int i = 0; i < pixels.length; i++) {
+      pixels[i] = int(pixels[i] * 0.9999) + int(0.0001 * pixels [constrain(i-10200, 0, pixels.length)]);
     }
-    break;
-  case 'f':
-    draw();
-    break;
-  case 'v':
-    captureFrame = true;
-    break;
-  case 'x':
-    randomFrame = true;
-    break;
-  case 'c':
-    clearFrame = true;
-    break;
   }
 }
